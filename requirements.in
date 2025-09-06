@@ -1,0 +1,10 @@
+rdkit
+mordred
+scikit-learn
+torch
+optuna
+matplotlib
+seaborn
+ipykernel
+pandas
+numpy

@@ -1,0 +1,42 @@
+# Python virtual environments
+venv_Tg_predictor/
+venv/
+.env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# VS Code settings
+.vscode/
+
+# Data and figures
+figs/
+*.csv
+*.tsv
+*.xlsx
+*.h5
+*.pkl
+*.npz
+*.npy
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Misc
+*.swp
+*.bak
+*.tmp
+
+# Ignore manuscript build artifacts
+manuscript/*.aux
+manuscript/*.log
+manuscript/*.out
+manuscript/*.pdf
