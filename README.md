@@ -1,36 +1,34 @@
-# Polymer Tg Prediction – Physics-Informed + UQ
+# Physics-Aware Polymer Tg Prediction (P-GRP)
 
-This project reproduces and extends the **Nature Communications Chemistry (2024) Tg prediction baseline** by:
-- Adding **physics-informed constraints** (free-volume, WLF, rigidity penalties).
-- Implementing **uncertainty quantification** (ensembles + conformal prediction).
-- Performing an **ablation study** to demonstrate improvements.
+This repository implements **Polymer-Graph Representations** with 
+physics-aware inductive biases and uncertainty quantification for 
+glass transition temperature (**Tg**) prediction.
 
-Target: **MRS Communications Special Issue (AI and Emerging Approaches, deadline Nov 15, 2025).**
+## Features
+- Polymer-specific graph representation
+- Physics-informed GNN (auxiliary free-volume & monotonicity constraints)
+- Ensemble + Conformal prediction for calibrated UQ
+- Applicability Domain (AD) analysis
+- Streamlit app for interactive Tg prediction
 
----
+## Getting Started
+```bash
+git clone https://github.com/yourname/polymer-tg-prediction
+cd polymer-tg-prediction
+pip install -r requirements.txt
+```
 
-## Repo Layout
-- `data/` → polymer datasets
-- `notebooks/` → exploratory and reproducibility notebooks
-- `src/` → reusable scripts (models, descriptors, physics, UQ)
-- `figs/` → saved plots for manuscript
-- `manuscript/` → outline + draft materials
+## Run Models
+```bash
+python src/train.py --model gnn --with_physics
+python src/evaluate.py --model gnn --with_uncertainty
+```
 
----
+## Streamlit App
+```bash
+streamlit run src/streamlit_app.py
+```
 
-## Dependencies
-- Python 3.12
-- RDKit
-- Mordred
-- scikit-learn
-- PyTorch
-- Optuna
-- Matplotlib / Seaborn
+## Citation
 
----
-
-## References
-- Rasulev et al., *Nature Comm. Chem.*, 2024
-- ChemRxiv preprint on Tg UQ (2024)
-- PENN (Physics-Enforced NN for polymers)
-- LieConv equivariant Tg predictor
+TBD — after MRS submission.
