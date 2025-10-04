@@ -8,3 +8,5 @@ seaborn
 ipykernel
 pandas
 numpy
+pdfplumber
+tqdm

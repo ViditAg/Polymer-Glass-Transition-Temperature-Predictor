@@ -3,8 +3,8 @@
 ---
 
 ## Week 1 — Setup & Baseline
-- [ ] Create `data/` folder structure (`raw`, `processed`)
-- [ ] Download and clean Rasulev 902-polymer dataset
+- [x] Create `data/` folder structure (`raw`, `processed`)
+- [x] Download and clean Rasulev 902-polymer dataset
 - [ ] Write `data_prep.py` to standardize SMILES and preprocess descriptors
 - [ ] Reproduce SVM baseline in `notebooks/exploratory.ipynb`
 - [ ] Save baseline metrics (RMSE, R²) to `results/tables/`
