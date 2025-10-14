@@ -4,18 +4,66 @@
 #
 #    pip-compile requirements.in
 #
+aimsim-core==2.2.3
+    # via astartes
+aiohappyeyeballs==2.6.1
+    # via aiohttp
+aiohttp==3.13.0
+    # via fsspec
+aiosignal==1.4.0
+    # via aiohttp
 alembic==1.16.5
     # via optuna
+anyio==4.11.0
+    # via
+    #   httpx
+    #   jupyter-server
+argon2-cffi==25.1.0
+    # via jupyter-server
+argon2-cffi-bindings==25.1.0
+    # via argon2-cffi
+arrow==1.3.0
+    # via isoduration
+astartes[molecules]==1.3.3
+    # via chemprop
 asttokens==3.0.0
     # via stack-data
+async-lru==2.0.5
+    # via jupyterlab
+attrs==25.4.0
+    # via
+    #   aiohttp
+    #   jsonschema
+    #   referencing
+babel==2.17.0
+    # via jupyterlab-server
+beautifulsoup4==4.14.2
+    # via nbconvert
+bleach[css]==6.2.0
+    # via nbconvert
+certifi==2025.10.5
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
 cffi==2.0.0
-    # via cryptography
+    # via
+    #   argon2-cffi-bindings
+    #   cryptography
 charset-normalizer==3.4.3
-    # via pdfminer-six
+    # via
+    #   pdfminer-six
+    #   requests
+chemprop==2.2.1
+    # via -r requirements.in
 colorlog==6.9.0
     # via optuna
 comm==0.2.3
-    # via ipykernel
+    # via
+    #   ipykernel
+    #   ipywidgets
+configargparse==1.7.1
+    # via chemprop
 contourpy==1.3.3
     # via matplotlib
 cryptography==46.0.2
@@ -26,42 +74,150 @@ debugpy==1.8.16
     # via ipykernel
 decorator==5.2.1
     # via ipython
+defusedxml==0.7.1
+    # via nbconvert
+descriptastorus==2.8.0
+    # via chemprop
+dill==0.4.0
+    # via multiprocess
 executing==2.2.1
     # via stack-data
+fastjsonschema==2.21.2
+    # via nbformat
 filelock==3.19.1
     # via torch
 fonttools==4.59.2
     # via matplotlib
-fsspec==2025.9.0
-    # via torch
+fqdn==1.5.1
+    # via jsonschema
+frozenlist==1.8.0
+    # via
+    #   aiohttp
+    #   aiosignal
+fsspec[http]==2025.9.0
+    # via
+    #   lightning
+    #   pytorch-lightning
+    #   torch
 greenlet==3.2.4
     # via sqlalchemy
+h11==0.16.0
+    # via httpcore
+httpcore==1.0.9
+    # via httpx
+httpx==0.28.1
+    # via jupyterlab
+idna==3.10
+    # via
+    #   anyio
+    #   httpx
+    #   jsonschema
+    #   requests
+    #   yarl
 ipykernel==6.30.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   jupyter
+    #   jupyter-console
+    #   jupyterlab
 ipython==9.5.0
-    # via ipykernel
+    # via
+    #   ipykernel
+    #   ipywidgets
+    #   jupyter-console
 ipython-pygments-lexers==1.1.1
     # via ipython
+ipywidgets==8.1.7
+    # via jupyter
+isoduration==20.11.0
+    # via jsonschema
 jedi==0.19.2
     # via ipython
 jinja2==3.1.6
-    # via torch
+    # via
+    #   jupyter-server
+    #   jupyterlab
+    #   jupyterlab-server
+    #   nbconvert
+    #   torch
 joblib==1.5.2
     # via scikit-learn
+json5==0.12.1
+    # via jupyterlab-server
+jsonpointer==3.0.0
+    # via jsonschema
+jsonschema[format-nongpl]==4.25.1
+    # via
+    #   jupyter-events
+    #   jupyterlab-server
+    #   nbformat
+jsonschema-specifications==2025.9.1
+    # via jsonschema
+jupyter==1.1.1
+    # via -r requirements.in
 jupyter-client==8.6.3
-    # via ipykernel
+    # via
+    #   ipykernel
+    #   jupyter-console
+    #   jupyter-server
+    #   nbclient
+jupyter-console==6.6.3
+    # via jupyter
 jupyter-core==5.8.1
     # via
     #   ipykernel
     #   jupyter-client
+    #   jupyter-console
+    #   jupyter-server
+    #   jupyterlab
+    #   nbclient
+    #   nbconvert
+    #   nbformat
+jupyter-events==0.12.0
+    # via jupyter-server
+jupyter-lsp==2.3.0
+    # via jupyterlab
+jupyter-server==2.17.0
+    # via
+    #   jupyter-lsp
+    #   jupyterlab
+    #   jupyterlab-server
+    #   notebook
+    #   notebook-shim
+jupyter-server-terminals==0.5.3
+    # via jupyter-server
+jupyterlab==4.4.9
+    # via
+    #   jupyter
+    #   notebook
+jupyterlab-pygments==0.3.0
+    # via nbconvert
+jupyterlab-server==2.27.3
+    # via
+    #   jupyterlab
+    #   notebook
+jupyterlab-widgets==3.0.15
+    # via ipywidgets
 kiwisolver==1.4.9
     # via matplotlib
+lark==1.3.0
+    # via rfc3987-syntax
+lightning==2.5.5
+    # via chemprop
+lightning-utilities==0.15.2
+    # via
+    #   lightning
+    #   pytorch-lightning
+    #   torchmetrics
 mako==1.3.10
     # via alembic
+markdown-it-py==4.0.0
+    # via rich
 markupsafe==3.0.2
     # via
     #   jinja2
     #   mako
+    #   nbconvert
 matplotlib==3.10.6
     # via
     #   -r requirements.in
@@ -70,28 +226,63 @@ matplotlib-inline==0.1.7
     # via
     #   ipykernel
     #   ipython
-mordred==1.2.0
-    # via -r requirements.in
+mdurl==0.1.2
+    # via markdown-it-py
+mhfp==1.9.6
+    # via aimsim-core
+mistune==3.1.4
+    # via nbconvert
+mordredcommunity==2.0.6
+    # via aimsim-core
 mpmath==1.3.0
     # via sympy
+multidict==6.7.0
+    # via
+    #   aiohttp
+    #   yarl
+multiprocess==0.70.18
+    # via aimsim-core
+nbclient==0.10.2
+    # via nbconvert
+nbconvert==7.16.6
+    # via
+    #   jupyter
+    #   jupyter-server
+nbformat==5.10.4
+    # via
+    #   jupyter-server
+    #   nbclient
+    #   nbconvert
 nest-asyncio==1.6.0
     # via ipykernel
 networkx==2.8.8
     # via
-    #   mordred
+    #   mordredcommunity
     #   torch
+notebook==7.4.7
+    # via jupyter
+notebook-shim==0.2.4
+    # via
+    #   jupyterlab
+    #   notebook
 numpy==1.26.4
     # via
     #   -r requirements.in
+    #   aimsim-core
+    #   astartes
+    #   chemprop
     #   contourpy
+    #   descriptastorus
     #   matplotlib
-    #   mordred
+    #   mordredcommunity
     #   optuna
     #   pandas
     #   rdkit
     #   scikit-learn
     #   scipy
     #   seaborn
+    #   torchmetrics
+    #   xarray
 nvidia-cublas-cu12==12.8.4.1
     # via
     #   nvidia-cudnn-cu12
@@ -134,12 +325,34 @@ optuna==4.5.0
 packaging==25.0
     # via
     #   ipykernel
+    #   jupyter-events
+    #   jupyter-server
+    #   jupyterlab
+    #   jupyterlab-server
+    #   lightning
+    #   lightning-utilities
     #   matplotlib
+    #   mordredcommunity
+    #   nbconvert
     #   optuna
+    #   pytorch-lightning
+    #   torchmetrics
+    #   xarray
+padelpy==0.1.16
+    # via aimsim-core
 pandas==2.3.2
     # via
     #   -r requirements.in
+    #   aimsim-core
+    #   astartes
+    #   chemprop
+    #   pandas-flavor
     #   seaborn
+    #   xarray
+pandas-flavor==0.7.0
+    # via descriptastorus
+pandocfilters==1.5.1
+    # via nbconvert
 parso==0.8.5
     # via jedi
 pdfminer-six==20250506
@@ -155,12 +368,24 @@ pillow==11.3.0
     #   rdkit
 platformdirs==4.4.0
     # via jupyter-core
+prometheus-client==0.23.1
+    # via jupyter-server
 prompt-toolkit==3.0.52
-    # via ipython
+    # via
+    #   ipython
+    #   jupyter-console
+propcache==0.4.1
+    # via
+    #   aiohttp
+    #   yarl
 psutil==7.0.0
-    # via ipykernel
+    # via
+    #   aimsim-core
+    #   ipykernel
 ptyprocess==0.7.0
-    # via pexpect
+    # via
+    #   pexpect
+    #   terminado
 pure-eval==0.2.3
     # via stack-data
 pycparser==2.23
@@ -169,35 +394,92 @@ pygments==2.19.2
     # via
     #   ipython
     #   ipython-pygments-lexers
+    #   jupyter-console
+    #   nbconvert
+    #   rich
 pyparsing==3.2.3
     # via matplotlib
 pypdfium2==4.30.0
     # via pdfplumber
 python-dateutil==2.9.0.post0
     # via
+    #   arrow
     #   jupyter-client
     #   matplotlib
     #   pandas
+python-json-logger==4.0.0
+    # via jupyter-events
+pytorch-lightning==2.5.5
+    # via lightning
 pytz==2025.2
     # via pandas
 pyyaml==6.0.2
-    # via optuna
+    # via
+    #   jupyter-events
+    #   lightning
+    #   optuna
+    #   pytorch-lightning
 pyzmq==27.0.2
     # via
     #   ipykernel
     #   jupyter-client
+    #   jupyter-console
+    #   jupyter-server
 rdkit==2025.3.6
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   aimsim-core
+    #   chemprop
+    #   descriptastorus
+    #   mordredcommunity
+referencing==0.36.2
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+    #   jupyter-events
+requests==2.32.5
+    # via jupyterlab-server
+rfc3339-validator==0.1.4
+    # via
+    #   jsonschema
+    #   jupyter-events
+rfc3986-validator==0.1.1
+    # via
+    #   jsonschema
+    #   jupyter-events
+rfc3987-syntax==1.1.0
+    # via jsonschema
+rich==14.2.0
+    # via chemprop
+rpds-py==0.27.1
+    # via
+    #   jsonschema
+    #   referencing
 scikit-learn==1.7.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   aimsim-core
+    #   astartes
+    #   chemprop
 scipy==1.16.1
-    # via scikit-learn
+    # via
+    #   astartes
+    #   chemprop
+    #   descriptastorus
+    #   scikit-learn
 seaborn==0.13.2
     # via -r requirements.in
+send2trash==1.8.3
+    # via jupyter-server
 six==1.17.0
     # via
-    #   mordred
+    #   mordredcommunity
     #   python-dateutil
+    #   rfc3339-validator
+sniffio==1.3.1
+    # via anyio
+soupsieve==2.8
+    # via beautifulsoup4
 sqlalchemy==2.0.43
     # via
     #   alembic
@@ -206,34 +488,94 @@ stack-data==0.6.3
     # via ipython
 sympy==1.14.0
     # via torch
+tabulate==0.9.0
+    # via astartes
+terminado==0.18.1
+    # via
+    #   jupyter-server
+    #   jupyter-server-terminals
 threadpoolctl==3.6.0
     # via scikit-learn
+tinycss2==1.4.0
+    # via bleach
 torch==2.8.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   chemprop
+    #   lightning
+    #   pytorch-lightning
+    #   torchmetrics
+torchmetrics==1.8.2
+    # via
+    #   lightning
+    #   pytorch-lightning
 tornado==6.5.2
     # via
     #   ipykernel
     #   jupyter-client
+    #   jupyter-server
+    #   jupyterlab
+    #   notebook
+    #   terminado
 tqdm==4.67.1
-    # via optuna
+    # via
+    #   -r requirements.in
+    #   lightning
+    #   optuna
+    #   pytorch-lightning
 traitlets==5.14.3
     # via
     #   ipykernel
     #   ipython
+    #   ipywidgets
     #   jupyter-client
+    #   jupyter-console
     #   jupyter-core
+    #   jupyter-events
+    #   jupyter-server
+    #   jupyterlab
     #   matplotlib-inline
+    #   nbclient
+    #   nbconvert
+    #   nbformat
 triton==3.4.0
     # via torch
+types-python-dateutil==2.9.0.20251008
+    # via arrow
 typing-extensions==4.15.0
     # via
+    #   aiosignal
     #   alembic
+    #   anyio
+    #   beautifulsoup4
+    #   lightning
+    #   lightning-utilities
+    #   pytorch-lightning
+    #   referencing
     #   sqlalchemy
     #   torch
 tzdata==2025.2
     # via pandas
+uri-template==1.3.0
+    # via jsonschema
+urllib3==2.5.0
+    # via requests
 wcwidth==0.2.13
     # via prompt-toolkit
+webcolors==24.11.1
+    # via jsonschema
+webencodings==0.5.1
+    # via
+    #   bleach
+    #   tinycss2
+websocket-client==1.9.0
+    # via jupyter-server
+widgetsnbextension==4.0.14
+    # via ipywidgets
+xarray==2025.10.1
+    # via pandas-flavor
+yarl==1.22.0
+    # via aiohttp
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

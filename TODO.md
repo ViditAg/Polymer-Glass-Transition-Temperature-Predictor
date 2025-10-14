@@ -1,87 +1,77 @@
-# TODO List — Week by Week
+# TODO List — 8-Week Research Sprint
+*Focus: Physics-Aware Graph Neural Networks for Polymer Glass Transition Temperature Prediction*
 
 ---
 
-## Week 1 — Setup & Baseline
+## Week 1 — Setup & Baseline ✅
 - [x] Create `data/` folder structure (`raw`, `processed`)
-- [x] Download and clean Rasulev 902-polymer dataset
-- [ ] Write `data_prep.py` to standardize SMILES and preprocess descriptors
-- [ ] Reproduce SVM baseline in `notebooks/exploratory.ipynb`
-- [ ] Save baseline metrics (RMSE, R²) to `results/tables/`
-- [ ] Set up repo: `requirements.txt`, `Dockerfile`, pre-commit linting
-- [ ] Add unit tests for data preprocessing (`tests/test_data_prep.py`)
-
+- [x] Download, clean and standardize Rasulev 902-polymer dataset (SMILES, Tg CSV)
+- [x] Use author provided data to reproduce SVM baseline from author descriptors `notebooks/baseline_Tg_prediction.ipynb`
 ---
 
-## Week 2 — P-GRP Representation
-- [ ] Implement SMILES → P-GRP converter in `representation.py`
-- [ ] Encode backbone vs side-chain, ring counts, sp2/sp3 flags
-- [ ] Add support for tacticity markers (isotactic, syndiotactic, atactic)
-- [ ] Write `tests/test_representation.py` to check graph construction
-- [ ] Train first GNN on P-GRP features (no physics bias) in `train.py`
-- [ ] Compare performance to descriptor-only MLP baseline
-- [ ] Document representation choices in `README.md`
-
+## Week 2 — Chemprop Baseline
+- [x] Install Chemprop and prepare dataset in required format
+- [x] Train baseline Chemprop MPNN model 
 ---
 
-## Week 3 — Physics-Aware Inductive Bias
-- [ ] Add physics head (free-volume proxy or rigidity score) in `models.py`
-- [ ] Implement monotonic regularization loss in `train.py`
-- [ ] Add auxiliary task for WLF parameter consistency
-- [ ] Train GNN baseline vs physics-biased version
-- [ ] Save comparison results (with/without physics) to `results/tables/`
-- [ ] Add parity plots (predicted vs true Tg) to `results/figures/`
-- [ ] Update `notebooks/ablation.ipynb` with results
+## Week 3 — Physics-Aware Modifications
+- [ ] Implement physics-informed loss function in `src/physics_chemprop.py`
+- [ ] Add monotonic regularization (rigidity → higher Tg)
+- [ ] Integrate polymer physics descriptors (free volume, chain flexibility)
+- [ ] Multi-task learning for WLF parameters (C1, C2)
+- [ ] **Milestone**: Physics-aware model outperforms vanilla Chemprop
 
 ---
 
 ## Week 4 — Uncertainty Quantification
-- [ ] Implement ensemble-based UQ in `uncertainty.py`
-- [ ] Train ensemble of 5 GNN models with different seeds
-- [ ] Add conformal prediction calibration (split/CV+)
-- [ ] Plot calibration curves in `evaluate.py`
-- [ ] Save coverage tables (50%, 80%, 95%) to `results/tables/`
-- [ ] Document UQ implementation in `README.md`
+- [ ] Implement ensemble training (5+ models with different seeds)
+- [ ] Add conformal prediction for calibrated confidence intervals
+- [ ] Generate calibration curves and coverage analysis
+- [ ] Create `src/uncertainty.py` with UQ utilities
+- [ ] **Milestone**: Well-calibrated uncertainty estimates
 
 ---
 
-## Week 5 — Applicability Domain & External Validation
-- [ ] Implement AD analysis (Mahalanobis distance, kNN) in `evaluate.py`
-- [ ] Add visualization: scatter plot of in-domain vs out-of-domain points
-- [ ] Validate models on external SciFinder dataset
-- [ ] Compare coverage & error for in-domain vs out-of-domain
-- [ ] Save AD plots + external set metrics to `results/figures/`
-- [ ] Write `notebooks/external_validation.ipynb` to summarize results
+## Week 5 — Applicability Domain & Model Analysis
+- [ ] Implement multiple AD methods (Mahalanobis, kNN, isolation forest)
+- [ ] Create domain boundary visualizations (PCA plots)
+- [ ] Analyze error correlation with domain membership
+- [ ] Test with synthetic challenging polymers
+- [ ] **Milestone**: Robust method to identify unreliable predictions
 
 ---
 
-## Week 6 — Ablation Study & Decision Demo
-- [ ] Run full ablation: SVM, MLP, GNN, GNN+physics, GNN+UQ, GNN+physics+UQ
-- [ ] Generate ablation bar charts (R², RMSE, calibration metrics)
-- [ ] Implement decision demo: top-k virtual screening experiment
-- [ ] Plot cost vs number of true hits (decision-centric figure)
-- [ ] Document ablation results in `results/figures/ablation.png`
-- [ ] Update `notebooks/ablation.ipynb` with decision analysis
+## Week 6 — Comprehensive Evaluation
+- [ ] Full ablation study: SVM → Chemprop → +Physics → +UQ → +AD
+- [ ] Generate publication-quality figures (parity plots, calibration curves, ablation bars)
+- [ ] Error analysis: where and why does the model fail?
+- [ ] Create `notebooks/02_comprehensive_evaluation.ipynb`
+- [ ] **Milestone**: Complete experimental validation of approach
 
 ---
 
-## Week 7 — Streamlit App
-- [ ] Build app in `streamlit_app.py`
-    - Input: SMILES or repeat unit
-    - Output: predicted Tg, UQ interval, AD flag, physics consistency score
-- [ ] Add parity + interval plot inside app
-- [ ] Add AD scatter plot panel
-- [ ] Package app with Dockerfile for easy deployment
-- [ ] Write app instructions in `README.md`
-- [ ] Record short demo (gif/screencast) and save in `results/`
+## Week 7 — Manuscript Draft & Results Analysis
+- [ ] Draft complete manuscript structure and introduction
+- [ ] Write detailed methodology section
+- [ ] Create all publication figures (`results/figures/`)
+- [ ] Compile results tables with statistical significance tests
+- [ ] Write results and discussion sections
+- [ ] **Milestone**: Complete first manuscript draft
 
 ---
 
-## Week 8 — Manuscript & Submission
-- [ ] Prepare final figures (pipeline schematic, parity, calibration, ablation, decision demo) in `results/figures/`
-- [ ] Compile final tables (metrics, coverage, ablation) in `results/tables/`
-- [ ] Draft manuscript text (`manuscript/mrs_submission.md`)
-- [ ] Cross-check citations and references
-- [ ] Finalize README and LICENSE
-- [ ] Add reproducibility script (`scripts/run_all.sh`)
+## Week 8 — Manuscript Finalization & Submission
+- [ ] Revise manuscript based on internal review
+- [ ] Finalize all figures with proper captions and formatting
+- [ ] Complete supplementary materials and code documentation
+- [ ] Add reproducibility script (`scripts/reproduce_results.sh`)
 - [ ] Submit to MRS Communications Special Issue
+- [ ] **Milestone**: Paper submitted for peer review
+
+---
+
+## Success Metrics
+- **Technical**: Physics-aware model achieves RMSE < 40K (20% improvement over baseline)
+- **Methodological**: Well-calibrated uncertainty with 90% coverage at 90% confidence
+- **Scientific**: Clear demonstration that physics constraints improve generalization
+- **Publication**: Accepted paper in MRS Communications or equivalent venue

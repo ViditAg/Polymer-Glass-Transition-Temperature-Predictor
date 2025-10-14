@@ -1,5 +1,4 @@
 rdkit
-mordred
 scikit-learn
 torch
 optuna
@@ -10,3 +9,5 @@ pandas
 numpy
 pdfplumber
 tqdm
+jupyter
+chemprop

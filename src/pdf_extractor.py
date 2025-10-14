@@ -111,7 +111,7 @@ def _get_leftover_data() -> pd.DataFrame:
                 "logTg": '2.6076',
                 "Series": "T",
                 "name": "4-(benzenesulfonyl)phenyl phenyl cyclohexylphosphonate",
-                "SMILES": "O=P(Oc1ccccc1)(Oc1ccc(cc1)S(=O)(=O)c1cccc1)C1CCCCC1",
+                "SMILES": "O=P(Oc1ccccc1)(Oc1ccc(cc1)S(=O)(=O)c1ccccc1)C1CCCCC1"
             },
             {
                 "ID": "SFT_IV22",
@@ -146,8 +146,8 @@ def _read_pdf(pdf_path: str, debug_mode: bool = False) -> pd.DataFrame:
     pages_w_header_merge_3 = [9, 11, 12, 30, 32, 33, 34, 36, 39]
     pages_w_header_merge_4 = [37]
     
-    pages_w_footer_1 = [1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 30]
-    pages_w_footer_merge_2 = [23, 24, 25, 26, 27, 28, 33, 37, 38, 39]
+    pages_w_footer_1 = [1, 2, 3, 4, 5, 6, 7, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 30]
+    pages_w_footer_merge_2 = [16, 23, 24, 25, 26, 27, 28, 33, 37, 38, 39]
     pages_w_footer_merge_3 = [8, 9, 10, 11, 29, 31, 32, 34, 35]
     pages_w_footer_merge_4 = [36]
     
@@ -258,6 +258,7 @@ def extract_tables_from_pdf(
     print("Removing \\n from SMILES and name strings")
     final_df_w_leftover['SMILES_clean'] = final_df_w_leftover['SMILES'].str.replace('\n', '')
     final_df_w_leftover['name_clean'] = final_df_w_leftover['name'].str.replace('\n', '')
+    final_df_w_leftover['ID'] = final_df_w_leftover['ID'].str.replace('\n', '')
 
     final_df_w_leftover.rename(
         columns={
