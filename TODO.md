@@ -15,58 +15,29 @@
 ---
 
 ## Week 3 — Physics-Aware Modifications
-- [ ] Implement physics-informed loss function in `src/physics_chemprop.py`
-- [ ] Add monotonic regularization (rigidity → higher Tg)
-- [ ] Integrate polymer physics descriptors (free volume, chain flexibility)
-- [ ] Multi-task learning for WLF parameters (C1, C2)
-- [ ] **Milestone**: Physics-aware model outperforms vanilla Chemprop
+- [x] Integrate polymer physics descriptors (free volume, chain flexibility)
+- [x] Train Chemprop MPNN model with features 
 
 ---
 
 ## Week 4 — Uncertainty Quantification
-- [ ] Implement ensemble training (5+ models with different seeds)
-- [ ] Add conformal prediction for calibrated confidence intervals
-- [ ] Generate calibration curves and coverage analysis
-- [ ] Create `src/uncertainty.py` with UQ utilities
-- [ ] **Milestone**: Well-calibrated uncertainty estimates
-
----
-
-## Week 5 — Applicability Domain & Model Analysis
-- [ ] Implement multiple AD methods (Mahalanobis, kNN, isolation forest)
+- [ ] Apply Uncertainity quantification via Chemprop
+- [ ] Hyperparameter tuning across all Chemprop models (baseline, +physics, +UQ) using grid/random search
+- [ ] Apply optimal hyperparameters to all model variants for fair comparison
+- [ ] Implement multiple AD methods (Mahalanobis and kNN)
 - [ ] Create domain boundary visualizations (PCA plots)
 - [ ] Analyze error correlation with domain membership
-- [ ] Test with synthetic challenging polymers
-- [ ] **Milestone**: Robust method to identify unreliable predictions
-
----
-
-## Week 6 — Comprehensive Evaluation
 - [ ] Full ablation study: SVM → Chemprop → +Physics → +UQ → +AD
-- [ ] Generate publication-quality figures (parity plots, calibration curves, ablation bars)
-- [ ] Error analysis: where and why does the model fail?
-- [ ] Create `notebooks/02_comprehensive_evaluation.ipynb`
-- [ ] **Milestone**: Complete experimental validation of approach
-
 ---
 
-## Week 7 — Manuscript Draft & Results Analysis
+## Week 5 — Comprehensive Evaluation
+- [ ] Generate publication-quality figures (parity plots, calibration curves, ablation bars)
 - [ ] Draft complete manuscript structure and introduction
 - [ ] Write detailed methodology section
 - [ ] Create all publication figures (`results/figures/`)
 - [ ] Compile results tables with statistical significance tests
 - [ ] Write results and discussion sections
 - [ ] **Milestone**: Complete first manuscript draft
-
----
-
-## Week 8 — Manuscript Finalization & Submission
-- [ ] Revise manuscript based on internal review
-- [ ] Finalize all figures with proper captions and formatting
-- [ ] Complete supplementary materials and code documentation
-- [ ] Add reproducibility script (`scripts/reproduce_results.sh`)
-- [ ] Submit to MRS Communications Special Issue
-- [ ] **Milestone**: Paper submitted for peer review
 
 ---
 

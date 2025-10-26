@@ -11,3 +11,4 @@ pdfplumber
 tqdm
 jupyter
 chemprop
+ray[tune]
