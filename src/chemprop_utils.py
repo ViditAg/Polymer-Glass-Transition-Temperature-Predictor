@@ -4,6 +4,9 @@
 
 from rdkit.Chem import Descriptors, rdMolDescriptors, MolFromSmiles
 
+
+
+
 def compute_descriptors(smiles):
     """Compute molecular descriptors for a given SMILES string.
 
