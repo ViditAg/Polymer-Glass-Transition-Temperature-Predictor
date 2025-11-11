@@ -1,34 +1,41 @@
-# Physics-Aware Polymer Tg Prediction (P-GRP)
+# Polymer Glass Transition Temperature Predictor
 
-This repository implements **Polymer-Graph Representations** with 
-physics-aware inductive biases and uncertainty quantification for 
-glass transition temperature (**Tg**) prediction.
+## Overview
+This project predicts polymer glass transition temperature (Tg) using Chemprop (MPNN) models. It includes data cleaning, feature engineering, model training, evaluation, and batch prediction for new datasets.
 
-## Features
-- Polymer-specific graph representation
-- Physics-informed GNN (auxiliary free-volume & monotonicity constraints)
-- Ensemble + Conformal prediction for calibrated UQ
-- Applicability Domain (AD) analysis
-- Streamlit app for interactive Tg prediction
+## Batch Prediction Usage
 
-## Getting Started
-```bash
-git clone https://github.com/yourname/polymer-tg-prediction
-cd polymer-tg-prediction
-pip install -r requirements.txt
-```
+### Local Environment
+1. Install dependencies:
+	```bash
+	python -m venv venv
+	source venv/bin/activate
+	pip install -r requirements.txt
+	```
+2. Run prediction:
+	```bash
+	python predict_Tg.py --model_path best_model.pt --input input.csv --output predictions.csv
+	```
 
-## Run Models
-```bash
-python src/train.py --model gnn --with_physics
-python src/evaluate.py --model gnn --with_uncertainty
-```
+### Docker
+1. Build image:
+	```bash
+	docker build -t tg-predictor .
+	```
+2. Run prediction:
+	```bash
+	docker run -v $(pwd):/app tg-predictor --model_path /app/best_model.pt --input /app/input.csv --output /app/predictions.csv
+	```
 
-## Streamlit App
-```bash
-streamlit run src/streamlit_app.py
-```
+## Input Format
+- CSV file with a column (default: `SMILES_clean`) containing SMILES strings.
 
-## Citation
+## Output
+- CSV file with predicted Tg values in a new column `Tg_pred`.
 
-TBD — after MRS submission.
+## Troubleshooting
+- Ensure model and input files exist and paths are correct.
+- For Docker, use absolute paths and mount volumes as shown above.
+
+## License
+See LICENSE file for details.

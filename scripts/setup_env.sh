@@ -20,10 +20,10 @@ echo "[2/6] Activating virtual environment"
 source "$VENV_NAME/bin/activate"
 
 echo "[3/6] Upgrading core packaging tools"
-pip install --upgrade pip setuptools wheel
+pip install setuptools wheel
 
 echo "[4/6] Installing pip-tools"
-pip install pip-tools
+pip install --upgrade pip-tools
 
 if [ -f requirements.in ]; then
   echo "[5/6] Compiling requirements.in -> requirements.txt"

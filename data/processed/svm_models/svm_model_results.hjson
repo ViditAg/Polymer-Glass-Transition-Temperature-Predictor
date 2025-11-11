@@ -1,0 +1,22 @@
+{
+  Training_StandardScaling:
+  {
+    r2_score: 0.9898202430699362
+    rmse: 0.014425543862993122
+  }
+  Training_MinMaxScaling:
+  {
+    r2_score: 0.8173543738301379
+    rmse: 0.06110378738367292
+  }
+  Testing_MinMaxScaling:
+  {
+    r2_score: 0.6587294038467015
+    rmse: 0.08113862907453091
+  }
+  Testing_StandardScaling:
+  {
+    r2_score: 0.7320528401813939
+    rmse: 0.0718956822010479
+  }
+}

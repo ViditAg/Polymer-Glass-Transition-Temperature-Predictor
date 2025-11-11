@@ -1,4 +1,6 @@
+hjson
 rdkit
+mordred
 scikit-learn
 torch
 optuna
@@ -8,7 +10,8 @@ ipykernel
 pandas
 numpy
 pdfplumber
+jupyterlab
 tqdm
-jupyter
 chemprop
 ray[tune]
+hyperopt
