@@ -13,6 +13,12 @@ __pycache__/
 # VS Code settings
 .vscode/
 
+# LaTeX auxiliary files
+manuscript/
+
+# chemprop files
+data/processed/chemprop_models/
+
 # Data and figures
 figs/
 *.csv
