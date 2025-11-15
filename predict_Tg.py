@@ -19,7 +19,7 @@ from typing import List, Optional, Tuple
 import pandas as pd
 import numpy as np
 
-DEFAULT_MODEL_PATH = "/path/to/best_chemprop_model_or_dir"  # Update to your best model path
+DEFAULT_MODEL_PATH = "data/processed/chemprop_models/with_features_rmse"  # Best Chemprop ensemble directory
 
 
 def setup_logging(verbosity: int) -> None:

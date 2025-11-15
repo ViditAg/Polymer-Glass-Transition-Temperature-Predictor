@@ -14,7 +14,7 @@ This project predicts polymer glass transition temperature (Tg) using Chemprop (
 	```
 2. Run prediction:
 	```bash
-	python predict_Tg.py --model_path best_model.pt --input input.csv --output predictions.csv
+	python predict_Tg.py --model data/processed/chemprop_models/with_features_rmse --input input.csv --output predictions.csv
 	```
 
 ### Docker
@@ -24,14 +24,14 @@ This project predicts polymer glass transition temperature (Tg) using Chemprop (
 	```
 2. Run prediction:
 	```bash
-	docker run -v $(pwd):/app tg-predictor --model_path /app/best_model.pt --input /app/input.csv --output /app/predictions.csv
+	docker run -v $(pwd):/app tg-predictor --model /app/data/processed/chemprop_models/with_features_rmse --input /app/input.csv --output /app/predictions.csv
 	```
 
 ## Input Format
-- CSV file with a column (default: `SMILES_clean`) containing SMILES strings.
+- CSV file with a column (default: `smiles`) containing SMILES strings.
 
 ## Output
-- CSV file with predicted Tg values in a new column `Tg_pred`.
+- CSV file with columns: `smiles_cleaned`, `logTg_pred`, `uncertainty`, and `smiles_valid`.
 
 ## Troubleshooting
 - Ensure model and input files exist and paths are correct.
