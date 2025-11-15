@@ -6,9 +6,10 @@ This project predicts polymer glass transition temperature (Tg) using Chemprop (
 ## Batch Prediction Usage
 
 ### Local Environment
+**Note:** This project uses Python 3.12.3. Please ensure you have Python 3.12.3 installed for best compatibility.
 1. Install dependencies:
 	```bash
-	python -m venv venv
+	python3.12 -m venv venv
 	source venv/bin/activate
 	pip install -r requirements.txt
 	```
@@ -18,6 +19,7 @@ This project predicts polymer glass transition temperature (Tg) using Chemprop (
 	```
 
 ### Docker
+**Note:** The Docker image is based on Python 3.12 and includes all required dependencies. You do not need to install Python or packages manually if using Docker.
 1. Build image:
 	```bash
 	docker build -t tg-predictor .
