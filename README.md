@@ -1,7 +1,7 @@
 # Polymer Glass Transition Temperature Predictor
 
 ## Overview
-This project predicts polymer glass transition temperature (Tg) using Chemprop (MPNN) models. It includes data cleaning, feature engineering, model training, evaluation, and batch prediction for new datasets.
+This project predicts polymer glass transition temperature (Tg) using an ensemble of Chemprop (MPNN) models.
 
 ## Batch Prediction Usage
 
@@ -9,7 +9,7 @@ This project predicts polymer glass transition temperature (Tg) using Chemprop (
 **Note:** This project uses Python 3.12.3. Please ensure you have Python 3.12.3 installed for best compatibility.
 1. Install dependencies:
 	```bash
-	python3.12 -m venv venv
+	python -m venv venv
 	source venv/bin/activate
 	pip install -r requirements.txt
 	```

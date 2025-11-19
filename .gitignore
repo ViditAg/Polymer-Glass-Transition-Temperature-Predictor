@@ -21,7 +21,6 @@ data/processed/chemprop_models/
 
 # Data and figures
 figs/
-*.csv
 *.tsv
 *.xlsx
 *.h5
