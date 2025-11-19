@@ -1,0 +1,12 @@
+Unnamed: 0,ID,logTg,Series,Ref,name_raw,SMILES_raw,SMI_generator,SMILES,name
+0,PPD_007,2.7077,T,A,chloroprene,C=CC(=C)Cl,PubChemPy,C=CC(=C)Cl,chloroprene
+1,PPD_008,2.852,T,A,acrylamide,C=CC(=O)N,PubChemPy,C=CC(=O)N,acrylamide
+2,PPD_010,2.8177,T,A,2-cyanobutyl acrylate,CCC(COC(=O)C=C)C#N,ChemAxon,CCC(COC(=O)C=C)C#N,2-cyanobutyl acrylate
+3,PPD_013,2.7178,P,A,"2,2,3,3-tetrafluoropropyl acrylate",C=CC(=O)OCC(C(F)F)(F)F,PubChemPy,C=CC(=O)OCC(C(F)F)(F)F,"2,2,3,3-tetrafluoropropyl acrylate"
+4,PPD_019,2.7552,T,A,cyanomethyl acrylate,C=CC(=O)OCC#N,PubChemPy,C=CC(=O)OCC#N,cyanomethyl acrylate
+5,PPD_029,2.7687,T,A,octadecyl acrylate,CCCCCCCCCCCCCCCCCCOC(=O)C=C,PubChemPy,CCCCCCCCCCCCCCCCCCOC(=O)C=C,octadecyl acrylate
+6,PPD_030,2.7421,T,A,phenoxyethyl acrylate,C=CC(=O)OCCOC1=CC=CC=C1,PubChemPy,C=CC(=O)OCCOC1=CC=CC=C1,phenoxyethyl acrylate
+7,PPD_034,2.7268,T,A,tetrahydro furfuryl acrylate,C=CC(=O)OCC1CCCO1,ChemAxon,C=CC(=O)OCC1CCCO1,tetrahydro furfuryl acrylate
+8,PPD_043,2.7854,P,A,1-(tert-butyl)ethene,CC(C)(C)C=C,ChemAxon,CC(C)(C)C=C,1-(tert-butyl)ethene
+9,PPD_067,2.8223,T,A,"4,4'-thiodiphenylene carbonate","C(=O)(O[S](c1ccccc1)c1ccccc1)O[S](c1ccccc1
+)c1ccccc1",ChemAxon,C(=O)(O[S](c1ccccc1)c1ccccc1)O[S](c1ccccc1)c1ccccc1,"4,4'-thiodiphenylene carbonate"

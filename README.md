@@ -1,7 +1,13 @@
 # Polymer Glass Transition Temperature Predictor
 
 ## Overview
-This project predicts polymer glass transition temperature (Tg) using an ensemble of Chemprop (MPNN) models.
+This project predicts polymer glass transition temperature (Tg) using an ensemble of Chemprop (MPNN) models. Further, calculate 
+epistemic uncertainity and Applicability domain metrics.
+
+## Jupyter Notebooks for the ensemble-based prediction analysis
+* Data cleaning: `notebooks/Data_cleaning.ipynb`
+* Base-line prediction using SVM regressor: `notebooks/Baseline_Tg_prediction.ipynb`
+* Chem-prop ensemble-based prediction: `notebooks/Chemprop_based_Tg_prediction.ipynb`
 
 ## Batch Prediction Usage
 
@@ -15,8 +21,9 @@ This project predicts polymer glass transition temperature (Tg) using an ensembl
 	```
 2. Run prediction:
 	```bash
-	python predict_Tg.py --model data/processed/chemprop_models/with_features_rmse --input input.csv --output predictions.csv
+	python predict_Tg.py --input input.csv --output predictions.csv
 	```
+	Sample test file given at `data\processed\test_predict_Tg_input.csv`
 
 ### Docker
 **Note:** The Docker image is based on Python 3.12 and includes all required dependencies. You do not need to install Python or packages manually if using Docker.
@@ -26,14 +33,14 @@ This project predicts polymer glass transition temperature (Tg) using an ensembl
 	```
 2. Run prediction:
 	```bash
-	docker run -v $(pwd):/app tg-predictor --model /app/data/processed/chemprop_models/with_features_rmse --input /app/input.csv --output /app/predictions.csv
+	docker run -v $(pwd):/app tg-predictor --input /app/input.csv --output /app/predictions.csv
 	```
 
 ## Input Format
-- CSV file with a column (default: `smiles`) containing SMILES strings.
+- CSV file with a column (default: `SMILES`) containing SMILES strings.
 
 ## Output
-- CSV file with columns: `smiles_cleaned`, `logTg_pred`, `uncertainty`, and `smiles_valid`.
+- CSV file with columns: `smiles_cleaned`, `logTg_pred` and `uncertainty`.
 
 ## Troubleshooting
 - Ensure model and input files exist and paths are correct.

@@ -19,6 +19,15 @@ from typing import List, Optional, Tuple
 import pandas as pd
 import numpy as np
 
+from glob import glob
+from chemprop.models.utils import load_model
+from lightning import pytorch as pl
+from rdkit import Chem
+from rdkit.Chem.SaltRemover import SaltRemover
+from rdkit.Chem import Descriptors, rdMolDescriptors, MolFromSmiles
+from chemprop import data, featurizers, utils
+from chemprop import uncertainty
+
 DEFAULT_MODEL_PATH = "data/processed/chemprop_models/with_features_rmse"  # Best Chemprop ensemble directory
 
 
@@ -49,8 +58,8 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "-c", "--smiles-column",
-        default="smiles",
-        help="Name of the SMILES column in the input CSV. Default: smiles"
+        default="SMILES",
+        help="Name of the SMILES column in the input CSV. Default: SMILES"
     )
     parser.add_argument(
         "-o", "--output",
@@ -66,14 +75,7 @@ def parse_args() -> argparse.Namespace:
     )
     return parser.parse_args()
 
-from glob import glob
-from chemprop.models.utils import load_model
-from lightning import pytorch as pl
-from rdkit import Chem
-from rdkit.Chem.SaltRemover import SaltRemover
-from rdkit.Chem import Descriptors, rdMolDescriptors, MolFromSmiles
-from chemprop import data, featurizers, utils
-from chemprop.uncertainty import uncertainty
+
 
 def remove_salt_and_convert_to_cannonical_smiles(smiles: str) -> str:
     """
@@ -293,7 +295,7 @@ def main() -> int:
             raise FileNotFoundError(f"Input file not found: {args.input}")
         # read input csv
         df = pd.read_csv(args.input)
-
+        
         # check if smiles column exists
         if args.smiles_column not in df.columns:
             raise ValueError(
@@ -322,17 +324,18 @@ def main() -> int:
 
         # make predictions with ensemble and calculate uncertainties
         logging.info("Making predictions with ensemble and calculating uncertainties...")
-        mean_pred, epistemic_uncertainty = ensemble_predict(
+        preds, epistemic_uncertainty = ensemble_predict(
             ensemble,
             cleaned_smiles,
             test_V_fs=np.array([list(desc.values()) for desc in descriptor_list]),
             num_workers=20
         )
-    
+        mean_pred = np.array(preds).mean(axis=0)
+        epistemic_unc = np.array(epistemic_uncertainty).reshape(-1, 1)
         out_df = df.copy()
         out_df["smiles_cleaned"] = cleaned_smiles
         out_df["logTg_pred"] = mean_pred
-        out_df["uncertainty"] = epistemic_uncertainty
+        out_df["uncertainty"] = epistemic_unc
 
         output_path = derive_output_path(args.input, args.output)
         out_df.to_csv(output_path, index=False)
