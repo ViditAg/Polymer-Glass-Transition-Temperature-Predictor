@@ -13,22 +13,19 @@ import os
 import sys
 import logging
 import traceback
-import glob
-from typing import List, Optional, Tuple
+from glob import glob
+from typing import List, Optional
 
 import pandas as pd
 import numpy as np
-
-from glob import glob
 from chemprop.models.utils import load_model
 from lightning import pytorch as pl
 from rdkit import Chem
 from rdkit.Chem.SaltRemover import SaltRemover
-from rdkit.Chem import Descriptors, rdMolDescriptors, MolFromSmiles
 from chemprop import data, featurizers, utils
 from chemprop import uncertainty
 
-DEFAULT_MODEL_PATH = "data/processed/chemprop_models/with_features_rmse"  # Best Chemprop ensemble directory
+DEFAULT_MODEL_PATH = "models/ensemble_without_descriptors"  # Best Chemprop ensemble directory
 
 
 def setup_logging(verbosity: int) -> None:
@@ -128,58 +125,24 @@ def clean_smiles_column(
     return cleaned_smiles
 
 
-def compute_descriptors(smiles):
-    """Compute molecular descriptors for a given SMILES string.
-
-    Args:
-        smiles (str): The SMILES representation of the molecule.
-
-    Returns:
-        descriptors (dict): A dictionary containing the computed molecular descriptors.
-            keys include:
-                - 'Moleculer Weight': Molecular Weight. 
-                - 'Proxy for Free Volume': Proxy for free volume.
-                - 'Rotatable Bonds': Number of Rotatable Bonds.
-                - 'Aromatic Rings': Number of Aromatic Rings.
-                - 'Topological Polar Surface Area': Topological Polar Surface Area.
-                - 'H-Bond Donors': Number of Hydrogen Bond Donors.
-                - 'H-Bond Acceptors': Number of Hydrogen Bond Acceptors
-    """
-    # Compute molecular descriptors
-    mol = MolFromSmiles(smiles)
-    # Check if the molecule was successfully created
-    if mol is None:
-        raise ValueError(f"Invalid SMILES string: {smiles}")
-
-    # Compute molecular descriptors
-    descriptors = {
-        'Moleculer Weight': Descriptors.MolWt(mol),
-        'Proxy for Free Volume': rdMolDescriptors.CalcExactMolWt(mol) / rdMolDescriptors.CalcNumHeavyAtoms(mol),
-        'Rotatable Bonds':  Descriptors.NumRotatableBonds(mol),
-        'Aromatic Rings': rdMolDescriptors.CalcNumAromaticRings(mol),
-        'Topological Polar Surface Area': Descriptors.TPSA(mol),
-        'H-Bond Donors': rdMolDescriptors.CalcNumHBD(mol),
-        'H-Bond Acceptors': rdMolDescriptors.CalcNumHBA(mol)
-    }
-
-    return descriptors
-
-
 def find_and_load_ensemble_models(
         model_path: str = DEFAULT_MODEL_PATH
     ) -> List:
     """
     Finds and loads Chemprop models from the specified path.
+    Searches for best_model.ckpt files in fold_*/seed_*/ structure.
     Args:
-        model_path (str): Path to a Chemprop checkpoint (.pt) or directory with ensemble checkpoints.
+        model_path (str): Path to directory containing fold_*/seed_*/best_model.ckpt structure.
     Returns:
         List: List of loaded Chemprop models.
     """
-    # find model checkpoints
-    model_ensemble_paths = glob(os.path.join(model_path, "*.pickle"))
+    # find all best_model.ckpt files across all folds and seeds
+    model_ensemble_paths = sorted(glob(os.path.join(model_path, "fold_*/seed_*/best_model.ckpt")))
     # raise error if no checkpoints found
     if not model_ensemble_paths:
-        raise FileNotFoundError(f"No model checkpoints found in {model_path}")
+        raise FileNotFoundError(f"No model checkpoints found in {model_path}. Expected structure: fold_*/seed_*/best_model.ckpt")
+
+    logging.info(f"Found {len(model_ensemble_paths)} model checkpoints")
 
     # initialize list to hold models
     model_ensemble = []
@@ -188,6 +151,7 @@ def find_and_load_ensemble_models(
     for path in model_ensemble_paths:
         model_ensemble.append(load_model(path))
     
+    logging.info(f"Loaded {len(model_ensemble)} models from ensemble")
     return model_ensemble
 
 
@@ -312,11 +276,6 @@ def main() -> int:
 
         logging.info("Cleaning SMILES...")
         cleaned_smiles = clean_smiles_column(raw_smiles)
-        
-        # add molecular descriptors
-        descriptor_list = []
-        for smi in cleaned_smiles:
-            descriptor_list.append(compute_descriptors(smi))
 
         # load ensemble models
         logging.info("Loading Chemprop ensemble models...")
@@ -327,11 +286,64 @@ def main() -> int:
         preds, epistemic_uncertainty = ensemble_predict(
             ensemble,
             cleaned_smiles,
-            test_V_fs=np.array([list(desc.values()) for desc in descriptor_list]),
+            test_V_fs=None,  # No descriptors for ensemble_without_descriptors models
             num_workers=20
         )
-        mean_pred = np.array(preds).mean(axis=0)
-        epistemic_unc = np.array(epistemic_uncertainty).reshape(-1, 1)
+        # Convert to numpy arrays and ensure correct shape
+        preds = np.array(preds)
+        epistemic_uncertainty = np.array(epistemic_uncertainty)
+        
+        logging.debug(f"Raw predictions shape: {preds.shape}")
+        logging.debug(f"Raw uncertainty shape: {epistemic_uncertainty.shape}")
+        
+        n_samples = len(cleaned_smiles)
+        
+        # Handle different possible shapes from EnsembleEstimator
+        # EnsembleEstimator should return mean predictions, but shape may vary
+        if preds.ndim == 0:
+            # Scalar - shouldn't happen for multiple samples
+            mean_pred = np.array([preds.item()] * n_samples)
+        elif preds.ndim == 1:
+            # 1D array - should be (n_samples,)
+            if len(preds) == n_samples:
+                mean_pred = preds
+            elif len(preds) == len(ensemble) * n_samples:
+                # All model predictions flattened - reshape and average
+                mean_pred = preds.reshape(len(ensemble), n_samples).mean(axis=0)
+            else:
+                raise ValueError(f"Unexpected prediction length: {len(preds)}, expected {n_samples} or {len(ensemble) * n_samples}")
+        else:
+            # 2D+ array - could be (n_samples, 1) or (n_models, n_samples) or (n_samples, n_models)
+            if preds.shape[0] == n_samples:
+                # (n_samples, ...) - take first dimension
+                mean_pred = preds[:, 0] if preds.shape[1] == 1 else np.mean(preds, axis=1)
+            elif preds.shape[0] == len(ensemble):
+                # (n_models, n_samples) - average across models
+                mean_pred = np.mean(preds, axis=0)
+            else:
+                raise ValueError(f"Unexpected prediction shape: {preds.shape}, expected ({n_samples},) or ({len(ensemble)}, {n_samples})")
+        
+        # Handle uncertainty similarly
+        if epistemic_uncertainty.ndim == 0:
+            epistemic_unc = np.array([epistemic_uncertainty.item()] * n_samples)
+        elif epistemic_uncertainty.ndim == 1:
+            if len(epistemic_uncertainty) == n_samples:
+                epistemic_unc = epistemic_uncertainty
+            elif len(epistemic_uncertainty) == len(ensemble) * n_samples:
+                epistemic_unc = epistemic_uncertainty.reshape(len(ensemble), n_samples).mean(axis=0)
+            else:
+                raise ValueError(f"Unexpected uncertainty length: {len(epistemic_uncertainty)}, expected {n_samples} or {len(ensemble) * n_samples}")
+        else:
+            if epistemic_uncertainty.shape[0] == n_samples:
+                epistemic_unc = epistemic_uncertainty[:, 0] if epistemic_uncertainty.shape[1] == 1 else np.mean(epistemic_uncertainty, axis=1)
+            elif epistemic_uncertainty.shape[0] == len(ensemble):
+                epistemic_unc = np.mean(epistemic_uncertainty, axis=0)
+            else:
+                raise ValueError(f"Unexpected uncertainty shape: {epistemic_uncertainty.shape}, expected ({n_samples},) or ({len(ensemble)}, {n_samples})")
+        
+        logging.debug(f"Final predictions shape: {mean_pred.shape}")
+        logging.debug(f"Final uncertainty shape: {epistemic_unc.shape}")
+        
         out_df = df.copy()
         out_df["smiles_cleaned"] = cleaned_smiles
         out_df["logTg_pred"] = mean_pred

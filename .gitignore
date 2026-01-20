@@ -15,9 +15,9 @@ __pycache__/
 
 # LaTeX auxiliary files
 manuscript/
-
 # chemprop files
-data/processed/chemprop_models/
+logs/
+models/
 
 # Data and figures
 figs/
@@ -25,8 +25,19 @@ figs/
 *.xlsx
 *.h5
 *.pkl
+*.pickle
 *.npz
 *.npy
+
+# Model checkpoints and weights
+*.ckpt
+*.pth
+*.pt
+*.h5
+*.hdf5
+
+# Large data files (keep essential training/test data)
+data/raw/*.pickle
 
 # OS files
 .DS_Store
