@@ -94,5 +94,11 @@ Sample test file available at `data/processed/test_predict_Tg_input.csv`.
 ### Docker
 - For Docker, use absolute paths and mount volumes as shown above
 
+## Citation
+
+If you use this repository or workflow in your research, please cite:
+
+V. Agrawal, *Polymer property prediction using ensemble of directed message-passing neural networks with uncertainty estimation and applicability domain analysis*, MRS Communications (2026). [https://doi.org/10.1557/s43579-026-00948-5](https://doi.org/10.1557/s43579-026-00948-5)
+
 ## License
 See LICENSE file for details.
